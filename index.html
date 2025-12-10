@@ -15,5 +15,19 @@
   <li><a href="https://trainofhope.go.link/?adj_t=1vowhm5u_1vx9qyr3">Train of hope</a></li>
 </ul>
 
+<div id="timer"></div>
+
+<script>
+let seconds = 5;
+const countdown = setInterval(() => {
+    seconds--;
+    document.getElementById('timer').textContent = seconds;
+
+    if (seconds === 0) {
+        clearInterval(countdown);
+        window.location.href = "https://trainofhope.go.link/?adj_t=1vowhm5u_1vx9qyr3";
+    }
+}, 1000);
+</script>
 </body>
 </html>
