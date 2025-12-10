@@ -16,9 +16,7 @@
             display: inline-block;
             cursor: pointer;
         }
-        .btn-link:hover {
-            background-color: #0056b3;
-        }
+        .btn-link:hover { background-color: #0056b3; }
     </style>
 </head>
 <body>
@@ -29,17 +27,19 @@
 </ul>
 
 <script>
-document.getElementById("startBtn").addEventListener("click", () => {
+const btn = document.getElementById("startBtn");
+
+btn.addEventListener("click", () => {
     let sec = 5;
-    document.getElementById('startBtn').textContent = sec;
+    btn.textContent = "Timer " + sec;
 
     const timer = setInterval(() => {
         sec--;
-        document.getElementById('startBtn').textContent = sec;
+        btn.textContent = "Timer " + sec;
 
         if (sec === 0) {
             clearInterval(timer);
-            window.location.href = "https://trainofhope.go.link/?adj_t=1vowhm5u_1vx9qyr3";
+            window.location.replace("https://trainofhope.go.link/?adj_t=1vowhm5u_1vx9qyr3");
         }
     }, 1000);
 });
