@@ -23,13 +23,15 @@
 
 <ul>
     <li>
-        <a href="https://trainofhope.go.link/?adj_t=1vowhm5u_1vx9qyr3">
+        <a href="#" class="js-link"
+           data-url="https://trainofhope.go.link/?adj_t=1vowhm5u_1vx9qyr3">
             Train of hope (Universal)
         </a>
     </li>
 
     <li>
-        <a href="com.samfinaco.tos://">
+        <a href="#" class="js-link"
+           data-url="com.samfinaco.tos://">
             Train of hope (Scheme)
         </a>
     </li>
@@ -52,6 +54,16 @@
 <script>
 const TIMER_SECONDS = 5;
 
+// Обычные ссылки по data-url
+document.querySelectorAll('.js-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const url = link.dataset.url;
+        window.location.replace(url);
+    });
+});
+
+// Таймер-ссылки
 document.querySelectorAll('.timer-link').forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
