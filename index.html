@@ -23,28 +23,32 @@
 
 <ul>
     <li>
-        <a href="#" class="js-link"
+        <a href="#"
+           class="js-link"
            data-url="https://trainofhope.go.link/?adj_t=1vowhm5u_1vx9qyr3">
             Train of hope (Universal)
         </a>
     </li>
 
     <li>
-        <a href="#" class="js-link"
+        <a href="#"
+           class="js-link"
            data-url="com.samfinaco.tos://">
             Train of hope (Scheme)
         </a>
     </li>
 
     <li>
-        <a href="#" class="timer-link"
+        <a href="#"
+           class="timer-link"
            data-url="https://trainofhope.go.link/?adj_t=1vowhm5u_1vx9qyr3">
             Timer: Train of hope (Universal)
         </a>
     </li>
 
     <li>
-        <a href="#" class="timer-link"
+        <a href="#"
+           class="timer-link"
            data-url="com.samfinaco.tos://">
             Timer: Train of hope (Scheme)
         </a>
@@ -52,41 +56,42 @@
 </ul>
 
 <script>
-const TIMER_SECONDS = 5;
+const DEFAULT_TIMER_SECONDS = 3;
 
-// Обычные ссылки по data-url
-document.querySelectorAll('.js-link').forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const url = link.dataset.url;
-        window.location.replace(url);
-    });
-});
+document.querySelectorAll('a[data-url]').forEach(link => {
+    const url = link.getAttribute('data-url');
+    const isTimer = link.classList.contains('timer-link');
 
-// Таймер-ссылки
-document.querySelectorAll('.timer-link').forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
+    if (!isTimer) {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.replace(url);
+        });
+    } else {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
 
-        if (link.dataset.running === '1') return;
-        link.dataset.running = '1';
+            if (link.dataset.running === '1') return;
+            link.dataset.running = '1';
 
-        const targetUrl = link.dataset.url;
-        let remaining = TIMER_SECONDS;
-        const baseText = link.textContent.trim();
+            let remaining = Number(link.dataset.time) || DEFAULT_TIMER_SECONDS;
 
-        link.textContent = baseText + ' (' + remaining + ')';
+            const baseText = (link.dataset.label || link.textContent).trim();
+            link.dataset.label = baseText;
 
-        const intervalId = setInterval(() => {
-            remaining--;
-            link.textContent = baseText + ' (' + remaining + ')';
+            link.textContent = `${baseText} (${remaining})`;
 
-            if (remaining <= 0) {
-                clearInterval(intervalId);
-                window.location.replace(targetUrl);
-            }
-        }, 1000);
-    });
+            const intervalId = setInterval(() => {
+                remaining--;
+                link.textContent = `${baseText} (${remaining})`;
+
+                if (remaining <= 0) {
+                    clearInterval(intervalId);
+                    window.location.replace(url);
+                }
+            }, 1000);
+        });
+    }
 });
 </script>
 
