@@ -7,7 +7,7 @@
         body {font-family: Arial, sans-serif; font-size: 16pt; background-color: #f4f4f4; color: #333; padding: 20px;}
         ul {list-style-type: none; padding: 0;}
         li {margin: 30px 0;}
-        a, .btn-link {
+        a {
             padding: 10px 15px;
             text-decoration: none;
             color: #fff;
@@ -16,33 +16,65 @@
             display: inline-block;
             cursor: pointer;
         }
-        .btn-link:hover { background-color: #0056b3; }
+        a:hover { background-color: #0056b3; }
     </style>
 </head>
 <body>
 
 <ul>
-  <li><a href="https://trainofhope.go.link/?adj_t=1vowhm5u_1vx9qyr3">Train of hope (Universal)</a></li>
-    <li><a href="com.samfinaco.tos://">Train of hope (Scheme)</a></li>
-  <li><div class="btn-link" id="startBtn">Timer</div></li>
+    <li>
+        <a href="https://trainofhope.go.link/?adj_t=1vowhm5u_1vx9qyr3">
+            Train of hope (Universal)
+        </a>
+    </li>
+
+    <li>
+        <a href="com.samfinaco.tos://">
+            Train of hope (Scheme)
+        </a>
+    </li>
+
+    <li>
+        <a href="#" class="timer-link"
+           data-url="https://trainofhope.go.link/?adj_t=1vowhm5u_1vx9qyr3">
+            Timer: Train of hope (Universal)
+        </a>
+    </li>
+
+    <li>
+        <a href="#" class="timer-link"
+           data-url="com.samfinaco.tos://">
+            Timer: Train of hope (Scheme)
+        </a>
+    </li>
 </ul>
 
 <script>
-const btn = document.getElementById("startBtn");
+const TIMER_SECONDS = 5;
 
-btn.addEventListener("click", () => {
-    let sec = 5;
-    btn.textContent = "Timer " + sec;
+document.querySelectorAll('.timer-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
 
-    const timer = setInterval(() => {
-        sec--;
-        btn.textContent = "Timer " + sec;
+        if (link.dataset.running === '1') return;
+        link.dataset.running = '1';
 
-        if (sec === 0) {
-            clearInterval(timer);
-            window.location.replace("https://trainofhope.go.link/?adj_t=1vowhm5u_1vx9qyr3");
-        }
-    }, 1000);
+        const targetUrl = link.dataset.url;
+        let remaining = TIMER_SECONDS;
+        const baseText = link.textContent.trim();
+
+        link.textContent = baseText + ' (' + remaining + ')';
+
+        const intervalId = setInterval(() => {
+            remaining--;
+            link.textContent = baseText + ' (' + remaining + ')';
+
+            if (remaining <= 0) {
+                clearInterval(intervalId);
+                window.location.replace(targetUrl);
+            }
+        }, 1000);
+    });
 });
 </script>
 
