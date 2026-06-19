@@ -23,53 +23,9 @@
 
 <ul>
     <li>
-        <a href="pocket-champs://link">Pocket Champs</a>
+        <a href="com.gt.rivals.car.racing.game://">GT Rivals</a>
     </li>    
-    <li>
-        <a href="https://aqyt.adj.st/link?adj_t=1av6vi7x_1atk0sba">Pocket Champs (Adjust)</a>
-    </li>
 </ul>
-
-
-<script>
-const DEFAULT_TIMER_SECONDS = 3;
-
-document.querySelectorAll('a[data-url]').forEach(link => {
-    const url = link.getAttribute('data-url');
-    const isTimer = link.classList.contains('timer-link');
-
-    if (!isTimer) {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.replace(url);
-        });
-    } else {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-
-            if (link.dataset.running === '1') return;
-            link.dataset.running = '1';
-
-            let remaining = Number(link.dataset.time) || DEFAULT_TIMER_SECONDS;
-
-            const baseText = (link.dataset.label || link.textContent).trim();
-            link.dataset.label = baseText;
-
-            link.textContent = `${baseText} (${remaining})`;
-
-            const intervalId = setInterval(() => {
-                remaining--;
-                link.textContent = `${baseText} (${remaining})`;
-
-                if (remaining <= 0) {
-                    clearInterval(intervalId);
-                    window.location.replace(url);
-                }
-            }, 1000);
-        });
-    }
-});
-</script>
 
 </body>
 </html>
